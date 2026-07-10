@@ -1,31 +1,43 @@
-# Built things
-_Debug/
-Compiled/
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
-# AudioCache can be rebuilt from sources
-AudioCache/
+# dependencies
+node_modules/
 
-# Lockfile
-_OpenInEditor.lock
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
 
-# User settings
-Game.agf.user
-*.crm.user
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
 
-# Backups
-Game.agf.bak
-backup_acsprset.spr
+# Metro
+.metro-health-check*
 
-# Memory dumps
-*.dmp
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
 
-# Temporary files
-# temporarily created during sprite or room background compression
-~aclzw.tmp
-# temporary, main game data, before getting packed into exe
-game28.dta
-# temporary build of the game before being moved to Compiled/ folder
-*.exe
+# macOS
+.DS_Store
+*.pem
 
-# Log files
-warnings.log
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+example
+
+# generated native folders
+/ios
+/android
