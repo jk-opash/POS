@@ -75,6 +75,7 @@ export function SalesChart({ data, activeTab, onTabChange }) {
                 chartConfig={config}
                 bezier
                 withVerticalLines={false}
+                withDots={false}
                 formatYLabel={(y) => {
                   const val = parseInt(y, 10);
                   if (val >= 1000) return `${(val / 1000).toFixed(0)}k`;
