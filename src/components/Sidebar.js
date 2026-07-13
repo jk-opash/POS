@@ -1,11 +1,11 @@
 import { Text } from "@/components/ui/Text";
-import { ThemeColors, ThemeRadius, ThemeSpacing } from "@/theme/theme";
 import { useBranches } from "@/context/BranchesContext";
-import { useState } from "react";
+import { ThemeColors, ThemeRadius, ThemeSpacing } from "@/theme/theme";
 import { usePathname, useRouter } from "expo-router";
 import {
   BellRing,
   Boxes,
+  Check,
   ChevronRight,
   Clock,
   FileText,
@@ -22,15 +22,15 @@ import {
   Users,
   Utensils,
   X,
-  Check
 } from "lucide-react-native";
+import { useState } from "react";
 import {
+  Modal,
   Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
-  Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -108,6 +108,8 @@ export function Sidebar({ isCollapsed }) {
 
   const activeItem = getActiveKey();
 
+  const currentBranchObj = branches.find((b) => b.id === activeBranch);
+
   const handleNavigate = (key) => {
     const route = routeMap[key] || "/";
     router.push(route);
@@ -163,7 +165,6 @@ export function Sidebar({ isCollapsed }) {
       {/* ── Scrollable Menu ─────────────────────── */}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={styles.menuScroll}
         contentContainerStyle={styles.menuScrollContent}
       >
         {isCollapsed
@@ -182,38 +183,42 @@ export function Sidebar({ isCollapsed }) {
             ))}
       </ScrollView>
 
+      <View style={{ padding: 10 }}>
+        <Text
+          weight="semibold"
+          style={{
+            color: ThemeColors.emerald,
+            fontSize: 13,
+          }}
+          numberOfLines={1}
+        >
+          ◉ {currentBranchObj?.name || "Select Branch"} ...
+        </Text>
+      </View>
+
       {/* ── Bottom: Settings ────────────────────── */}
       <View style={styles.bottomSection}>
         <View style={styles.profileCard}>
           {!isCollapsed && (
-            <>
-              <View style={styles.profileInfo}>
-                <Text
-                  weight="semibold"
-                  style={styles.profileName}
-                  numberOfLines={1}
-                >
-                  Mr. Admin
-                </Text>
-              </View>
-              <ChevronRight size={14} color={ThemeColors.textMuted} />
-            </>
+            <View style={styles.profileInfo}>
+              <Text
+                weight="semibold"
+                style={styles.profileName}
+                numberOfLines={1}
+              >
+                Mr. Admin
+              </Text>
+            </View>
           )}
         </View>
         <TouchableOpacity
-          style={[
-            styles.settingsBtn,
-          ]}
+          style={[styles.settingsBtn]}
           onPress={() => setShowBranchModal(true)}
           activeOpacity={0.7}
         >
-          <MapPin
-            size={18}
-            color={ThemeColors.textMuted}
-            strokeWidth={1.8}
-          />
+          <MapPin size={18} color={ThemeColors.textMuted} strokeWidth={1.8} />
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={[
             styles.settingsBtn,
@@ -343,6 +348,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   menuScrollContent: {
+    flexGrow: 1,
     paddingHorizontal: 8,
   },
 
@@ -419,9 +425,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  profileInfo: {
-    flex: 1,
-  },
+  profileInfo: { flex: 1 },
   profileName: {
     color: ThemeColors.white,
     fontSize: 13,
